@@ -12,11 +12,7 @@ import umap
 
 class Visualizer:
     def __init__(self, save_path='../results/figures/'):
-        """
-        Initializes the Visualizer.
-        Args:
-            save_path: Path to save the visualizations.
-        """
+        """Initializes the Visualizer"""
         self.save_path = save_path
         self.setup_visualization_settings()
         os.makedirs(save_path, exist_ok=True)
@@ -30,9 +26,7 @@ class Visualizer:
         plt.rcParams['savefig.dpi'] = 300
 
     def save_plot(self, name, fig=None, is_plotly=False):
-        """
-        General method to save plots.
-        """
+        """General method to save plots"""
         try:
             if is_plotly:
                 fig.write_html(f'{self.save_path}{name}.html')
@@ -143,7 +137,7 @@ class Visualizer:
             print(f"Error in lifestyle factors plot: {str(e)}")
 
     def plot_demographic_analysis(self, data):
-        """Plots demographic analysis."""
+        """Plots demographic analysis"""
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
         
         # Age groups
