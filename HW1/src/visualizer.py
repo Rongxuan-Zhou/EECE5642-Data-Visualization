@@ -13,16 +13,16 @@ import umap
 class Visualizer:
     def __init__(self, save_path='../results/figures/'):
         """
-        初始化可视化器
+        Initializes the Visualizer.
         Args:
-            save_path: 图表保存路径
+            save_path: Path to save the visualizations.
         """
         self.save_path = save_path
         self.setup_visualization_settings()
         os.makedirs(save_path, exist_ok=True)
 
     def setup_visualization_settings(self):
-        """设置可视化参数"""
+        """Configures visualization settings."""
         plt.style.use('seaborn')
         sns.set_style("whitegrid")
         plt.rcParams['figure.figsize'] = [10, 6]
@@ -31,7 +31,7 @@ class Visualizer:
 
     def save_plot(self, name, fig=None, is_plotly=False):
         """
-        保存图表的通用方法
+        General method to save plots.
         """
         try:
             if is_plotly:
@@ -43,7 +43,7 @@ class Visualizer:
             print(f"Error saving {name}: {str(e)}")
 
     def plot_anxiety_severity_distribution(self, data):
-        """绘制焦虑严重程度分布图"""
+        """Plots the distribution of anxiety severity."""
         plt.figure(figsize=(12, 6))
         sns.histplot(data=data, x='Severity of Anxiety Attack (1-10)', 
                     bins=10, kde=True)
@@ -53,7 +53,7 @@ class Visualizer:
         self.save_plot('anxiety_severity_distribution')
 
     def plot_correlation_matrix(self, data):
-        """绘制相关性矩阵"""
+        """Plots the correlation matrix."""
         numerical_cols = [
             'Age', 'Sleep Hours', 'Physical Activity (hrs/week)',
             'Caffeine Intake (mg/day)', 'Alcohol Consumption (drinks/week)',
@@ -78,7 +78,7 @@ class Visualizer:
         self.save_plot('correlation_matrix')
 
     def plot_physical_factors(self, data):
-        """绘制身体症状与焦虑程度的关系图"""
+        """Plots the relationship between physical symptoms and anxiety severity."""
         fig = plt.figure(figsize=(16, 12))
         
         # Heart Rate
@@ -116,7 +116,7 @@ class Visualizer:
         self.save_plot('physical_factors')
 
     def plot_lifestyle_factors(self, data):
-        """创建生活方式因素的交互式图表"""
+        """Creates interactive visualizations for lifestyle factors."""
         try:
             fig = px.scatter_matrix(
                 data,
@@ -143,7 +143,7 @@ class Visualizer:
             print(f"Error in lifestyle factors plot: {str(e)}")
 
     def plot_demographic_analysis(self, data):
-        """绘制人口统计学分析图"""
+        """Plots demographic analysis."""
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
         
         # Age groups
@@ -173,8 +173,8 @@ class Visualizer:
         self.save_plot('demographic_analysis')
 
     def plot_dimensionality_reduction(self, data):
-        """绘制降维分析图 (PCA, t-SNE, UMAP)"""
-        # 准备数据
+        """Plots dimensionality reduction analysis (PCA, t-SNE, UMAP)."""
+        # Prepare data
         numerical_cols = [
             'Age', 'Sleep Hours', 'Physical Activity (hrs/week)',
             'Caffeine Intake (mg/day)', 'Alcohol Consumption (drinks/week)',
@@ -186,7 +186,7 @@ class Visualizer:
         X = data[numerical_cols].values
         y = data['Severity of Anxiety Attack (1-10)'].values
         
-        # 数据标准化
+        # Standardize data
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
         
@@ -202,7 +202,7 @@ class Visualizer:
         reducer = umap.UMAP(random_state=42)
         X_umap = reducer.fit_transform(X_scaled)
         
-        # 创建图表
+        # Create plots
         fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(24, 8))
         
         # PCA plot
@@ -233,7 +233,7 @@ class Visualizer:
         self.save_plot('dimensionality_reduction')
 
     def generate_all_visualizations(self, data):
-        """生成所有可视化图表"""
+        """Generates all visualizations."""
         print("\nStarting visualization generation...")
         
         try:

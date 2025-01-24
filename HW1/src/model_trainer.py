@@ -6,7 +6,7 @@ import pandas as pd
 
 class ModelTrainer:
     def __init__(self):
-        """模型训练器初始化"""
+        """Initializes the Model Trainer."""
         self.model = RandomForestClassifier(
             n_estimators=100,
             random_state=42,
@@ -15,7 +15,7 @@ class ModelTrainer:
         self.feature_importance = None
     
     def train(self, X_train, y_train):
-        """训练模型"""
+        """Trains the model."""
         print("Training model...")
         self.model.fit(X_train, y_train)
         self.feature_importance = pd.Series(
@@ -25,15 +25,15 @@ class ModelTrainer:
         print("Model training completed")
     
     def evaluate(self, X_test, y_test):
-        """评估模型"""
+        """Evaluates the model."""
         print("Evaluating model...")
         y_pred = self.model.predict(X_test)
         
-        # 生成评估报告
+        # Generate evaluation reports
         report = classification_report(y_test, y_pred)
         conf_matrix = confusion_matrix(y_test, y_pred)
         
-        # 计算特征重要性
+        # Calculate feature importance
         feature_imp = pd.DataFrame({
             'feature': X_test.columns,
             'importance': self.model.feature_importances_
@@ -46,6 +46,6 @@ class ModelTrainer:
         }
     
     def save_model(self, path='../results/files/model.joblib'):
-        """保存模型"""
+        """Saves the model."""
         joblib.dump(self.model, path)
         print(f"Model saved to {path}")

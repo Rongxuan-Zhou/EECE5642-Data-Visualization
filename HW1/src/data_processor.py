@@ -5,11 +5,7 @@ from sklearn.model_selection import train_test_split
 
 class DataProcessor:
     def __init__(self, data_path='../data/anxiety_attack_dataset.csv'):
-        """
-        数据处理器初始化
-        Args:
-            data_path: CSV数据文件路径
-        """
+        """Initializes the DataProcessor with the given data path."""
         self.data_path = data_path
         self.data = None
         self.X = None
@@ -17,7 +13,7 @@ class DataProcessor:
         self.feature_names = None
         
     def load_data(self):
-        """加载数据"""
+        """Loads the data"""
         try:
             self.data = pd.read_csv(self.data_path)
             print(f"Successfully loaded data with shape: {self.data.shape}")
@@ -27,7 +23,7 @@ class DataProcessor:
             return None
     
     def get_data_info(self):
-        """获取数据基本信息"""
+        """Retrieves basic information about the data"""
         info = {
             'shape': self.data.shape,
             'columns': self.data.columns.tolist(),
@@ -38,23 +34,23 @@ class DataProcessor:
         return info
     
     def preprocess_data(self):
-        """数据预处理"""
+        """Preprocesses the data"""
         if self.data is None:
             print("Please load data first")
             return None
         
-        # 1. 检查并处理缺失值
+        # 1. Check and handle missing values
         missing_values = self.data.isnull().sum()
         if missing_values.any():
             print("Handling missing values...")
             self.data = self.data.dropna()
         
-        # 2. 分离特征和目标变量
+        # 2. Separate features and target variable
         self.y = self.data['Anxiety_Level']
         self.X = self.data.drop('Anxiety_Level', axis=1)
         self.feature_names = self.X.columns
         
-        # 3. 特征标准化
+        # 3. Standardize features
         scaler = StandardScaler()
         self.X = pd.DataFrame(
             scaler.fit_transform(self.X),
@@ -64,7 +60,7 @@ class DataProcessor:
         return self.X, self.y
     
     def split_data(self, test_size=0.2, random_state=42):
-        """划分训练集和测试集"""
+        """Splits the data into training and testing sets"""
         if self.X is None or self.y is None:
             print("Please preprocess data first")
             return None

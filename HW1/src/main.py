@@ -5,21 +5,21 @@ import logging
 import os
 
 def setup_logging():
-    """设置日志配置"""
+    """Configures logging settings."""
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
 
 def ensure_directories():
-    """确保必要的目录存在"""
+    """Ensures necessary directories exist."""
     directories = ['../results', '../results/figures']
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
 
 def preprocess_data(data):
-    """数据预处理"""
-    # 转换数值型列
+    """Preprocesses the data."""
+    # Convert numeric columns
     numeric_cols = [
         'Age', 'Sleep Hours', 'Physical Activity (hrs/week)',
         'Caffeine Intake (mg/day)', 'Alcohol Consumption (drinks/week)',
@@ -36,21 +36,21 @@ def preprocess_data(data):
 
 def main():
     try:
-        # 初始化设置
+        # Initialize settings
         setup_logging()
         ensure_directories()
         logging.info("Starting anxiety analysis project")
         
-        # 加载数据
+        # Load data
         data_path = '../data/anxiety_attack_dataset.csv'
         data = pd.read_csv(data_path)
         logging.info(f"Successfully loaded data with shape: {data.shape}")
         
-        # 数据预处理
+        # Preprocess data
         data = preprocess_data(data)
         logging.info("Data preprocessing completed")
         
-        # 创建可视化
+        # Create visualizations
         visualizer = Visualizer()
         visualizer.generate_all_visualizations(data)
         
